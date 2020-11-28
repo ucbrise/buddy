@@ -1,4 +1,3 @@
-import pysqldf
 from buddy import Channel, Table
 from buddy import garbage_collect, periodic, tick
 
@@ -19,13 +18,13 @@ def send_packet():
 
 def send_ack():
     global ack_chan
-    ack_chan += [p.src, p.dst, p.ident for p in data_chan]
+    ack_chan += {(p.src, p.dst, p.ident) for p in data_chan}
 
 def recv_ack():
     global pipe_sent
     # Stratified Negation
     with tick():
-        pipe_sent += [s for s in pipe_in for a in ack_chan if s.ident == a.ident]
+        pipe_sent += {s for s in pipe_in for a in ack_chan if s.ident == a.ident}
 
 
 ###################

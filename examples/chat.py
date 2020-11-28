@@ -1,4 +1,3 @@
-import pysqldf
 import time
 from buddy import Channel
 from buddy import init
@@ -12,7 +11,7 @@ mcast = Channel()
 
 def multicast():
     global mcast
-    mcast += [n.key, m.val for m in mcast for n in [c.client, c.nick for c in connect]]
+    mcast += {(n.key, m.val) for m in mcast for n in {(c.client, c.nick) for c in connect}}
 
 
 ###################
@@ -22,7 +21,7 @@ def multicast():
 @init
 def run(nick, port, server):
     global connect, mcast
-    connect += [[server, port, nick]]
+    connect += {(server, port, nick)}
     while True:
-        mcast += [server, [port, nick, time(), input('Message: ')]]
+        mcast += {(server, (port, nick, time(), input('Message: ')))}
         print([m.val for m in mcast])
