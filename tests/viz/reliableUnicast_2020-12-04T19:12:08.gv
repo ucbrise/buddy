@@ -1,0 +1,13 @@
+digraph reliableUnicast {
+size="8,5"
+pipe_in [shape=circle];
+pipe_sent [shape=doublecircle];
+"pipe_sent+" [shape=doublecircle];
+dummy0 [shape=diamond,style=filled,label="",height=.1,width=.1];
+dummy1 [shape=diamond,style=filled,label="",height=.1,width=.1];
+pipe_in -> dummy0;
+pipe_sent -> dummy0 [color=red];
+pipe_in -> "pipe_sent+";
+dummy0 -> dummy1 [style=dotted,label=data_chan];
+dummy1 -> "pipe_sent+" [style=dotted,label=ack_chan];
+}

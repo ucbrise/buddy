@@ -1,0 +1,12 @@
+digraph kmer {
+size="8,5"
+addresses [shape=circle];
+kmers [shape=circle];
+result [shape=circle];
+dummy0 [shape=diamond,style=filled,label="",height=.1,width=.1];
+dummy1 [shape=diamond,style=filled,label="",height=.1,width=.1];
+addresses -> dummy0 [color=red];
+dummy0 -> dummy1 [style=dotted,label=worker];
+dummy1 -> kmers [style=dotted,label=chunk];
+kmers -> result [color=red];
+}
