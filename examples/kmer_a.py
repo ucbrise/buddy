@@ -4,9 +4,9 @@ from buddy import garbage_collect, periodic, tick
 from buddy import init, utils
 
 
-workers = Table(key='@addr', value=('pid', 'dna_base', 'file_uri'))
-base_to_addr = Index(workers, key='dna_base', value='addr', fetch_next='tuple',
-                fetch_mode='coin_flip')
+worker = Table(key='@addr', value=('pid', 'dna_base', 'file_uri'))
+base_to_addr = Index(worker, key='dna_base', value='addr', fetch_next='tuple',
+                     fetch_mode='coin_flip')
 
 
 kmer_stream = Channel(key='uuid' value=('seq', '@addr', 'sender'))
@@ -29,8 +29,8 @@ def count():
 
 def read_dna_file():
     global kmer_buffer, kmer_stream
-    _, pid, dna_base, file_uri = workers[utils.MY_ADDR]
-    file = utils.open_chunk(file_uri, pid, len(workers), mode='r_char')
+    _, pid, dna_base, file_uri = worker[utils.MY_ADDR]
+    file = utils.open_chunk(file_uri, pid, len(worker), mode='r_char')
 
     kmer_buffer += {(utils.uuid(), file[i: i+4], base_to_addr[file[i]].next(), utils.MY_ADDR) 
                 for i in range(len(file)) if i+4 <= len(file)}
