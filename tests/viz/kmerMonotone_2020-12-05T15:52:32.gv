@@ -1,0 +1,10 @@
+digraph kmerMonotone {
+size="8,5"
+kmers [shape=circle];
+result [shape=circle];
+dummy0 [shape=diamond,style=filled,label="",height=.1,width=.1];
+dummy1 [shape=diamond,style=filled,label="",height=.1,width=.1];
+dummy0 -> dummy1 [style=dotted,label=worker];
+dummy1 -> kmers [style=dotted,label=kmer_stream];
+kmers -> result [color=red];
+}
