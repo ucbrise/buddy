@@ -1,7 +1,13 @@
-# State-based CRDT.
+addr: globals
+uuid: globals
+public: globals
+view: globals
 
-data_buff = Table(key='dst', value=('uuid','payload'))
-pipe_in = View(query="""
+Channel: 'function'
+Table: 'function'
+
+data_buff = Table(key='@dst', value=('uuid','payload'))
+pipe_out = View(query="""
             SELECT *
             FROM data_buff
             WHERE dst = @addr
@@ -10,12 +16,12 @@ ackd = Table(key='dst', value=('uuid', 'payload'))
 
 def ack():
     global ackd
-    ackd += pipe_in
+    ackd += pipe_out
 
 @public
 def send(dst: str, payload: str):
     global data_buff
-    data_buff += {(dst, uuid(), payload)}
+    data_buff += {(dst, payload)}
 
 @garbage_collect
 def gc():
