@@ -1,10 +1,10 @@
 # State-based CRDT.
 
-data_buff = Table(key='dst', value=('uuid','payload'))
+data_buff = Table(key='@dst', value=('uuid','payload'))
 pipe_in = View(query="""
             SELECT *
             FROM data_buff
-            WHERE dst = @addr
+            WHERE dst = addr()
             """)
 ackd = Table(key='dst', value=('uuid', 'payload'))
 
