@@ -10,7 +10,7 @@ result = View(query="""
                     GROUP BY seq
                     """)
 
-def read_dna_file(kmer_stream=open(worker.file_uri, req_id=uuid(), addr=worker.addr, mode='char[4]')):
+def read_dna_file(kmer_stream = open(worker.file_uri, req_id=uuid(), addr=worker.addr, mode='char[4]')):
     global kmers
     kmers += {(uuid(), kmer) for kmer in kmer_stream}
 
